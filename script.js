@@ -9,6 +9,7 @@ fetch('questions.json')
         quizData = data;
         userAnswers = new Array(data.length).fill(null); // จองที่ว่างสำหรับคำตอบทุกข้อ
         showQuestion();
+        startTimer();
     })
     .catch(error => {
         document.getElementById('quiz-container').innerHTML = '<h2>โหลดข้อมูลไม่สำเร็จ</h2>';
