@@ -25,7 +25,6 @@ function showQuestion() {
     // ล้างข้อมูลเก่า
     questionElement.innerText = `${currentQuestionIndex + 1}. ${questionData.question}`;
     optionsElement.innerHTML = '';
-    rationaleElement.style.display = 'none';
 
     // สร้างปุ่มตัวเลือก
     questionData.options.forEach((option, index) => {
