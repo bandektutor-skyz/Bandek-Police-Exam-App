@@ -11,7 +11,7 @@ async function loadQuestions() {
 
 function startQuiz(setNumber) {
     // กรองข้อสอบเฉพาะชุดที่เลือก
-    currentQuestions = allQuestions.filter(q => q.set === setNumber);
+    currentQuestions = allQuestions.filter(q => q.set == setNumber);
 
     if (currentQuestions.length > 0) {
         currentIndex = 0;
