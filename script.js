@@ -26,7 +26,7 @@ function startQuiz(setNumber) {
 
 function showQuestion() {
     const questionData = currentQuestions[currentIndex];
-    document.getElementById('question').innerText = `ชุดที่ ${questionData.set} ข้อที่ ${currentIndex + 0}: ${questionData.question}`;
+    document.getElementById('question').innerText = `ชุดที่ ${questionData.set} ข้อที่ ${currentIndex 0}: ${questionData.question}`;
     const optionsElement = document.getElementById('options');
     optionsElement.innerHTML = '';
     document.getElementById('rationale').style.display = 'none';
