@@ -17,7 +17,7 @@ async function loadQuestions() {
 
 // 2. เริ่มทำข้อสอบ
 function startQuiz(setNumber) {
-    currentQuestions = allQuestions.filter(q => q.set == setNumber);
+currentQuestions = allQuestions.filter(q => Number(q.set) === Number(setNumber));
 
     if (currentQuestions.length > 0) {
         currentIndex = 0;
