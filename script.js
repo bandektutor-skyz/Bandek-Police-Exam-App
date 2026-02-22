@@ -9,11 +9,11 @@ async function loadQuestions() {
 }
 
 function startQuiz(setNumber) {
-    // กรองข้อสอบเฉพาะชุดที่เลือก
-    currentQuestions = allQuestions.filter(q => q.set === setNumber);
+    // เพิ่มบรรทัดนี้เพื่อให้โปรแกรมไปดึงเฉพาะข้อสอบที่มี "set" ตรงกับปุ่มที่กด
+    currentQuestions = allQuestions.filter(q => q.set === setNumber); 
 
+    currentIndex = 0;
     if (currentQuestions.length > 0) {
-        currentIndex = 0;
         document.getElementById('menu-container').style.display = 'none';
         document.getElementById('quiz-content').style.display = 'block';
         document.getElementById('timer-container').style.display = 'block';
