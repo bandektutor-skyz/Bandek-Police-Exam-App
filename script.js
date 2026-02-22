@@ -105,8 +105,29 @@ function prevQuestion() {
 // 6. จบการสอบ
 function finishQuiz() {
     clearInterval(timerInterval);
-    alert(`ยินดีด้วย! คุณทำข้อสอบครบแล้ว\nได้คะแนน ${score} เต็ม ${currentQuestions.length}`);
-    location.reload(); // กลับไปหน้าแรก
+    
+    // ซ่อนหน้าข้อสอบและตัวจับเวลา
+    document.getElementById('quiz-content').style.display = 'none';
+    document.getElementById('timer-container').style.display = 'none';
+    
+    // แสดงหน้าสรุปผลคะแนน
+    const resultContainer = document.getElementById('result-container');
+    resultContainer.style.display = 'block';
+    
+    // ใส่คะแนน
+    document.getElementById('final-score').innerText = `${score} / ${currentQuestions.length}`;
+    
+    // เพิ่มข้อความตามระดับคะแนน
+    const messageElement = document.getElementById('score-message');
+    const percent = (score / currentQuestions.length) * 100;
+    
+    if (percent >= 80) {
+        messageElement.innerText = "สุดยอดมาก! โอกาสสอบติดสูงมากครับ ✨";
+    } else if (percent >= 50) {
+        messageElement.innerText = "เก่งมากครับ อีกนิดเดียวจะทำคะแนนได้ดีมากแล้ว 💪";
+    } else {
+        messageElement.innerText = "พยายามต่อไปนะครับ ทบทวนบ่อยๆ เดี๋ยวก็เก่งครับ ✌️";
+    }
 }
 
 // 7. จับเวลา
