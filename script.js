@@ -1,52 +1,36 @@
-let allQuestions = [];      // เก็บข้อสอบทั้งหมดจากไฟล์ JSON
-let currentQuestions = [];  // เก็บข้อสอบเฉพาะชุดที่เลือก (เช่น ชุดที่ 1)
+let allQuestions = [];
+let currentQuestions = [];
 let currentIndex = 0;
 let timerInterval;
 
-// 1. โหลดข้อสอบทั้งหมดเตรียมไว้ก่อน
 async function loadQuestions() {
-    try {
-        const response = await fetch('questions.json');
-        allQuestions = await response.json();
-        console.log("โหลดข้อสอบสำเร็จ");
-    } catch (error) {
-        console.error("โหลดข้อสอบไม่สำเร็จ:", error);
-    }
+    const response = await fetch('questions.json');
+    allQuestions = await response.json();
 }
 
-// 2. ฟังก์ชันเริ่มทำข้อสอบตามชุดที่เลือก
 function startQuiz(setNumber) {
-    // ใช้ filter กรองข้อสอบที่มีเลขชุดตรงกับที่กดเลือก
+    // กรองข้อสอบเฉพาะชุดที่เลือก
     currentQuestions = allQuestions.filter(q => q.set === setNumber);
 
     if (currentQuestions.length > 0) {
         currentIndex = 0;
-        // ซ่อนหน้าเมนู และแสดงหน้าทำข้อสอบ
         document.getElementById('menu-container').style.display = 'none';
         document.getElementById('quiz-content').style.display = 'block';
         document.getElementById('timer-container').style.display = 'block';
-        
         showQuestion();
         startTimer();
     } else {
-        alert("ขออภัย! ยังไม่มีข้อมูลข้อสอบชุดที่ " + setNumber);
+        alert("ขออภัย! ชุดที่ " + setNumber + " ยังไม่มีข้อสอบ");
     }
 }
 
-// 3. ฟังก์ชันแสดงโจทย์ (ปรับจากของเดิมเล็กน้อย)
 function showQuestion() {
     const questionData = currentQuestions[currentIndex];
-    const questionElement = document.getElementById('question');
+    document.getElementById('question').innerText = `ชุดที่ ${questionData.set} ข้อที่ ${currentIndex + 1}: ${questionData.question}`;
     const optionsElement = document.getElementById('options');
-    const rationaleElement = document.getElementById('rationale');
-
-    // แสดงโจทย์และลำดับข้อ
-    questionElement.innerText = `ข้อที่ ${currentIndex + 1}: ${questionData.question}`;
     optionsElement.innerHTML = '';
-    rationaleElement.style.display = 'none';
-    rationaleElement.innerText = questionData.rationale;
+    document.getElementById('rationale').style.display = 'none';
 
-    // สร้างปุ่มตัวเลือก
     questionData.options.forEach((option, index) => {
         const button = document.createElement('button');
         button.innerText = option;
@@ -56,31 +40,30 @@ function showQuestion() {
     });
 }
 
-// 4. ฟังก์ชันเลือกคำตอบ (คงเดิมจากที่คุณมี)
 function selectAnswer(selectedIndex) {
     const questionData = currentQuestions[currentIndex];
     const buttons = document.querySelectorAll('.option-btn');
     const rationaleElement = document.getElementById('rationale');
 
     buttons.forEach((btn, index) => {
-        btn.disabled = true; // ห้ามกดซ้ำ
-        if (index === questionData.answer) {
-            btn.classList.add('correct'); // สีเขียว
+        btn.disabled = true;
+        if (index === questionData.answerIndex) { // ตรวจสอบชื่อฟิลด์ใน JSON ของคุณ
+            btn.style.backgroundColor = "#4CAF50"; // สีเขียวเข้ม
+            btn.style.color = "white";
         } else if (index === selectedIndex) {
-            btn.classList.add('incorrect'); // สีแดง
+            btn.style.backgroundColor = "#f44336"; // สีแดงเข้ม
+            btn.style.color = "white";
         }
     });
 
-    rationaleElement.style.display = 'block'; // แสดงเฉลย
+    rationaleElement.innerText = "เฉลย: " + questionData.rationale;
+    rationaleElement.style.display = 'block';
 }
 
-// 5. ฟังก์ชันเปลี่ยนข้อ
 function nextQuestion() {
     if (currentIndex < currentQuestions.length - 1) {
         currentIndex++;
         showQuestion();
-    } else {
-        alert("คุณทำครบทุกข้อในชุดนี้แล้ว!");
     }
 }
 
@@ -91,23 +74,17 @@ function prevQuestion() {
     }
 }
 
-// 6. ระบบจับเวลา 180 นาที (คงเดิม)
 function startTimer() {
-    let time = 180 * 60; 
+    let time = 180 * 60;
     const timerDisplay = document.getElementById('time');
-    
     clearInterval(timerInterval);
     timerInterval = setInterval(() => {
         let minutes = Math.floor(time / 60);
         let seconds = time % 60;
         timerDisplay.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-        if (time <= 0) {
-            clearInterval(timerInterval);
-            alert("หมดเวลาสอบ!");
-        }
+        if (time <= 0) { clearInterval(timerInterval); alert("หมดเวลา!"); }
         time--;
     }, 1000);
 }
 
-// เรียกโหลดข้อสอบทันทีที่เปิดเว็บ
 loadQuestions();
