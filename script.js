@@ -147,5 +147,20 @@ function startTimer() {
         time--;
     }, 1000);
 }
-
+function resetQuiz() {
+    // 1. ซ่อนหน้าสรุปคะแนน
+    document.getElementById('result-container').style.display = 'none';
+    
+    // 2. กลับไปแสดงหน้าเมนูเลือกชุดข้อสอบ
+    document.getElementById('menu-container').style.display = 'block';
+    
+    // 3. รีเซ็ตค่าตัวแปรต่างๆ เตรียมพร้อมสำหรับการสอบครั้งใหม่
+    currentIndex = 0;
+    score = 0;
+    currentQuestions = [];
+    
+    // 4. รีเซ็ตหน้าปัดเวลา (ถ้าต้องการให้กลับไปเป็น 180:00)
+    document.getElementById('time').innerText = "180:00";
+    document.getElementById('timer-container').style.display = 'none';
+}
 loadQuestions();
