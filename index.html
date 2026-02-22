@@ -16,12 +16,15 @@
     </style>
 </head>
 <body>
-    <div id="quiz-container">
-        <h2 id="question">กำลังโหลดข้อสอบ...</h2>
-        <div id="options"></div>
-        <div id="rationale" class="rationale"></div>
-        <button id="next-btn" style="display:none; background:#28a745;">ข้อถัดไป</button>
+<div id="quiz-container">
+    <h2 id="question">กำลังโหลดข้อสอบ...</h2>
+    <div id="options"></div>
+    <div style="display: flex; gap: 10px; margin-top: 20px;">
+        <button id="prev-btn" onclick="prevQuestion()" style="background-color: #6c757d;">ย้อนกลับ</button>
+        <button id="skip-btn" onclick="nextQuestion()" style="background-color: #f39c12;">ข้ามข้อนี้</button>
     </div>
+    <div id="rationale" class="rationale"></div>
+</div>
     <script src="script.js"></script>
 </body>
 </html>
