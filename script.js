@@ -75,3 +75,27 @@ function prevQuestion() {
         showQuestion();
     }
 }
+let timeLeft = 180 * 60; // ตั้งเวลา 180 นาที (เปลี่ยนเป็นวินาที)
+const timerElement = document.getElementById('time');
+
+function startTimer() {
+    const timerInterval = setInterval(() => {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+
+        // แสดงผลในรูปแบบ 00:00
+        timerElement.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            alert("หมดเวลาสอบแล้ว!");
+            // คุณสามารถเพิ่มฟังก์ชันสรุปคะแนนตรงนี้ได้
+        } else {
+            timeLeft--;
+        }
+    }, 1000);
+}
+
+// เรียกใช้ฟังก์ชันจับเวลาเมื่อโหลดข้อมูลเสร็จ
+// แก้ไขในส่วน fetch(...).then(data => { ... }) เพิ่มบรรทัดนี้ลงไป:
+// startTimer();
