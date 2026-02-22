@@ -10,7 +10,7 @@ async function loadQuestions() {
 
 function startQuiz(setNumber) {
     // เพิ่มบรรทัดนี้เพื่อให้โปรแกรมไปดึงเฉพาะข้อสอบที่มี "set" ตรงกับปุ่มที่กด
-    currentQuestions = allquestions.filter(q => q.set === setNumber); 
+    currentQuestions = allQuestions.filter(q => q.set === setNumber); 
 
     currentIndex = 0;
     if (currentQuestions.length > 0) {
