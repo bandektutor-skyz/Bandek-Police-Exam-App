@@ -1,53 +1,77 @@
-let questions = [];
-let currentIndex = 0;
-let score = 0;
+let currentQuestionIndex = 0;
+let quizData = [];
+let userAnswers = []; // เก็บคำตอบที่ผู้ใช้เลือกไว้
 
-async function loadQuestions() {
-    try {
-        const response = await fetch('questions.json');
-        questions = await response.json();
+// โหลดข้อมูลจาก JSON
+fetch('questions.json')
+    .then(response => response.json())
+    .then(data => {
+        quizData = data;
+        userAnswers = new Array(data.length).fill(null); // จองที่ว่างสำหรับคำตอบทุกข้อ
         showQuestion();
-    } catch (error) {
-        document.getElementById('question').innerText = "โหลดข้อมูลไม่สำเร็จ";
-    }
-}
+    })
+    .catch(error => {
+        document.getElementById('quiz-container').innerHTML = '<h2>โหลดข้อมูลไม่สำเร็จ</h2>';
+        console.error('Error:', error);
+    });
 
 function showQuestion() {
-    const q = questions[currentIndex];
-    document.getElementById('question').innerText = `ข้อที่ ${currentIndex + 1}: ${q.question}`;
-    const optionsDiv = document.getElementById('options');
-    optionsDiv.innerHTML = '';
-    document.getElementById('rationale').style.display = 'none';
-    document.getElementById('next-btn').style.display = 'none';
+    const questionData = quizData[currentQuestionIndex];
+    const questionElement = document.getElementById('question');
+    const optionsElement = document.getElementById('options');
+    const rationaleElement = document.getElementById('rationale');
 
-    q.options.forEach((opt, i) => {
-        const btn = document.createElement('button');
-        btn.innerText = opt;
-        btn.onclick = () => checkAnswer(i);
-        optionsDiv.appendChild(btn);
+    // ล้างข้อมูลเก่า
+    questionElement.innerText = `${currentQuestionIndex + 1}. ${questionData.question}`;
+    optionsElement.innerHTML = '';
+    rationaleElement.style.display = 'none';
+
+    // สร้างปุ่มตัวเลือก
+    questionData.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.innerText = option;
+        
+        // ถ้าเคยตอบข้อนี้ไปแล้ว ให้ไฮไลท์ไว้
+        if (userAnswers[currentQuestionIndex] === index) {
+            button.style.border = "3px solid #2ecc71";
+        }
+
+        button.onclick = () => selectAnswer(index);
+        optionsElement.appendChild(button);
     });
+
+    // ซ่อนปุ่มย้อนกลับถ้าอยู่ที่ข้อแรก
+    document.getElementById('prev-btn').style.visibility = (currentQuestionIndex === 0) ? 'hidden' : 'visible';
 }
 
-function checkAnswer(i) {
-    const q = questions[currentIndex];
-    const ratDiv = document.getElementById('rationale');
-    if (i === q.answerIndex) {
-        score++;
-        ratDiv.innerHTML = `<b style="color:green">ถูกต้อง!</b><br>${q.rationale}`;
-    } else {
-        ratDiv.innerHTML = `<b style="color:red">ผิด! คำตอบคือ: ${q.options[q.answerIndex]}</b><br>${q.rationale}`;
-    }
-    ratDiv.style.display = 'block';
-    document.getElementById('next-btn').style.display = 'block';
+function selectAnswer(index) {
+    userAnswers[currentQuestionIndex] = index; // บันทึกคำตอบ
+    const questionData = quizData[currentQuestionIndex];
+    const rationaleElement = document.getElementById('rationale');
+
+    // แสดงเฉลย (ถ้าต้องการให้เฉลยทันที)
+    rationaleElement.innerText = (index === questionData.answerIndex) ? 
+        `ถูกต้อง! ${questionData.rationale}` : 
+        `ผิดนะ.. คำตอบที่ถูกคือ: ${questionData.options[questionData.answerIndex]}. ${questionData.rationale}`;
+    
+    rationaleElement.style.display = 'block';
+
+    // หน่วงเวลา 1.5 วินาทีแล้วไปข้อถัดไปอัตโนมัติ
+    setTimeout(nextQuestion, 1500);
 }
 
-document.getElementById('next-btn').onclick = () => {
-    currentIndex++;
-    if (currentIndex < questions.length) {
+function nextQuestion() {
+    if (currentQuestionIndex < quizData.length - 1) {
+        currentQuestionIndex++;
         showQuestion();
     } else {
-        document.getElementById('quiz-container').innerHTML = `<h2>จบการสอบ! คะแนนของคุณ: ${score}/${questions.length}</h2><button onclick="location.reload()">เริ่มใหม่</button>`;
+        alert("ทำครบทุกข้อแล้ว! ตรวจทานข้อที่ข้ามไปได้โดยกดปุ่มย้อนกลับ");
     }
-};
+}
 
-loadQuestions();
+function prevQuestion() {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        showQuestion();
+    }
+}
