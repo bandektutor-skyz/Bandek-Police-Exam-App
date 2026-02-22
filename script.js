@@ -46,19 +46,29 @@ function showQuestion() {
 }
 
 function selectAnswer(index) {
-    userAnswers[currentQuestionIndex] = index; // บันทึกคำตอบ
+    userAnswers[currentQuestionIndex] = index;
     const questionData = quizData[currentQuestionIndex];
     const rationaleElement = document.getElementById('rationale');
 
-    // แสดงเฉลย (ถ้าต้องการให้เฉลยทันที)
-    rationaleElement.innerText = (index === questionData.answerIndex) ? 
-        `ถูกต้อง! ${questionData.rationale}` : 
-        `ผิดนะ.. คำตอบที่ถูกคือ: ${questionData.options[questionData.answerIndex]}. ${questionData.rationale}`;
+    const isCorrect = (index === questionData.answerIndex);
+
+    // กำหนดสีและความเข้มตามผลลัพธ์
+    if (isCorrect) {
+        // สีเขียวเข้ม (Dark Green) สำหรับข้อที่ถูก
+        rationaleElement.style.backgroundColor = "#d4edda"; // พื้นหลังเขียวอ่อน
+        rationaleElement.style.color = "#155724";           // ตัวอักษรเขียวเข้ม
+        rationaleElement.style.border = "1px solid #c3e6cb";
+        rationaleElement.innerHTML = `<b>✅ ถูกต้อง!</b><br>${questionData.rationale}`;
+    } else {
+        // สีแดงเข้ม (Dark Red) สำหรับข้อที่ผิด
+        rationaleElement.style.backgroundColor = "#f8d7da"; // พื้นหลังแดงอ่อน
+        rationaleElement.style.color = "#721c24";           // ตัวอักษรแดงเข้ม
+        rationaleElement.style.border = "1px solid #f5c6cb";
+        rationaleElement.innerHTML = `<b>❌ ผิดครับ...</b><br>คำตอบที่ถูกคือ: <b style="text-decoration: underline;">${questionData.options[questionData.answerIndex]}</b><br><small>${questionData.rationale}</small>`;
+    }
     
     rationaleElement.style.display = 'block';
-
-    // หน่วงเวลา 1.5 วินาทีแล้วไปข้อถัดไปอัตโนมัติ
-    setTimeout(nextQuestion, 1500);
+    showQuestion(); // อัปเดตไฮไลท์สีที่ปุ่มตัวเลือกด้วย
 }
 
 function nextQuestion() {
