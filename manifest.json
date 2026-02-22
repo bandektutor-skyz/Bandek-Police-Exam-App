@@ -1,0 +1,16 @@
+{
+  "name": "App ข้อสอบนายสิบตำรวจ 150 ข้อ",
+  "short_name": "ข้อสอบตำรวจ",
+  "description": "แอปฝึกทำข้อสอบนายสิบตำรวจตามหลักสูตรปัจจุบัน",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1a73e8",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2562/2562212.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
