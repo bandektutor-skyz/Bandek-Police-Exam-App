@@ -26,11 +26,11 @@ currentQuestions = allQuestions.filter(q => Number(q.set) === Number(setNumber))
         document.getElementById('quiz-content').style.display = 'block';
         document.getElementById('timer-container').style.display = 'block';
         showQuestion();
-     startTimer();
-        document.getElementById('home-btn').style.display = 'block';
-    } else {
-        alert("ขออภัย! ชุดที่ " + setNumber + " ยังไม่มีข้อสอบ");
-    }
+   startTimer();
+    document.getElementById('home-btn').style.display = 'block';
+  } else {
+    alert("ขออภัย! ชุดที่ " + setNumber + " ยังไม่มีข้อสอบ");
+  }
 }
 
 // 3. แสดงโจทย์
