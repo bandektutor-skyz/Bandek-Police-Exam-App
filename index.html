@@ -46,11 +46,17 @@
     </div>
 </div>
 
-<div id="quiz-content" style="display: none;">
+<div id="quiz-content" style="display: none; padding: 20px; max-width: 800px; margin: 0 auto;">
+    <div id="question-container">
+        <h2 id="question">กำลังโหลดข้อสอบ...</h2>
+        <div id="options"></div>
     </div>
-            <button id="prev-btn" onclick="prevQuestion()" style="background-color: #6c757d;">ย้อนกลับ</button>
-            <button id="skip-btn" onclick="nextQuestion()" style="background-color: #f39c12;">ข้ามข้อนี้</button>
-        </div>
+    
+    <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
+        <button id="prev-btn" onclick="prevQuestion()" style="background-color: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">ย้อนกลับ</button>
+        <button id="skip-btn" onclick="nextQuestion()" style="background-color: #f39c12; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">ข้ามข้อนี้</button>
+    </div>
+</div>
         <div id="rationale" class="rationale"></div>
     </div>
 </div>
