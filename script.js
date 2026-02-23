@@ -1,174 +1,72 @@
 let allQuestions = [];
 let currentQuestions = [];
-let currentIndex = 0;
-let score = 0; // เพิ่มตัวแปรเก็บคะแนน
-let timerInterval;
 
-// 1. โหลดข้อมูล
-async function loadQuestions() {
-    try {
-        const response = await fetch('questions.json');
-        allQuestions = await response.json();
-        console.log("โหลดข้อมูลสำเร็จ จำนวน:", allQuestions.length);
-    } catch (error) {
-        console.error("โหลดไฟล์ JSON ไม่สำเร็จ:", error);
-    }
-}
+fetch('questions.json')
+  .then(response => response.json())
+  .then(data => {
+    allQuestions = data;
+    console.log("โหลดสำเร็จ:", allQuestions.length);
+  })
+  .catch(err => console.error("ไฟล์ JSON พัง:", err));
 
-// 2. เริ่มทำข้อสอบ
 function startQuiz(setNumber) {
-currentQuestions = allQuestions.filter(q => Number(q.set) === Number(setNumber));
+    currentQuestions = allQuestions.filter(q => String(q.set).trim() === String(setNumber).trim());
 
     if (currentQuestions.length > 0) {
         currentIndex = 0;
-        score = 0; // รีเซ็ตคะแนนใหม่ทุกครั้งที่เริ่ม
+        score = 0;
         document.getElementById('menu-container').style.display = 'none';
         document.getElementById('quiz-content').style.display = 'block';
         document.getElementById('timer-container').style.display = 'block';
         showQuestion();
-   startTimer();
-    document.getElementById('home-btn').style.display = 'block';
-  } else {
-    alert("ขออภัย! ชุดที่ " + setNumber + " ยังไม่มีข้อสอบ");
-  }
+        startTimer();
+        document.getElementById('home-btn').style.display = 'block';
+    } else {
+        alert("ขออภัย! ไม่พบข้อสอบชุดที่ " + setNumber);
+    }
 }
 
-// 3. แสดงโจทย์
 function showQuestion() {
     const questionData = currentQuestions[currentIndex];
-    
-    // อัปเดตหัวข้อและหมวดหมู่
     document.getElementById('question').innerText = `[${questionData.category}] ข้อที่ ${currentIndex + 1}: ${questionData.question}`;
-    
     const optionsElement = document.getElementById('options');
     optionsElement.innerHTML = '';
-    
-    // ซ่อนเฉลยเมื่อขึ้นข้อใหม่
-    const rationaleElement = document.getElementById('rationale');
-    rationaleElement.style.display = 'none';
-    rationaleElement.classList.remove('correct', 'wrong');
-
     questionData.options.forEach((option, index) => {
         const button = document.createElement('button');
         button.innerText = option;
-        button.classList.add('option-btn');
-        button.onclick = () => selectAnswer(index);
+        button.onclick = () => checkAnswer(index);
         optionsElement.appendChild(button);
     });
 }
 
-// 4. เลือกคำตอบ
-function selectAnswer(selectedIndex) {
+function checkAnswer(selectedIndex) {
     const questionData = currentQuestions[currentIndex];
-    const buttons = document.querySelectorAll('.option-btn');
-    const rationaleElement = document.getElementById('rationale');
-
-    // ตรวจสอบว่าตอบถูกหรือไม่
-    if (selectedIndex === questionData.answerIndex) {
-        score++;
-        rationaleElement.classList.add('correct');
-    } else {
-        rationaleElement.classList.add('wrong');
-    }
-
-    buttons.forEach((btn, index) => {
-        btn.disabled = true; // ล็อกปุ่มไม่ให้กดซ้ำ
-        if (index === questionData.answerIndex) {
-            btn.style.backgroundColor = "#4CAF50"; // สีเขียว (ข้อที่ถูก)
-            btn.style.color = "white";
-        } else if (index === selectedIndex) {
-            btn.style.backgroundColor = "#f44336"; // สีแดง (ข้อที่เราเลือกผิด)
-            btn.style.color = "white";
-        }
-    });
-
-    rationaleElement.innerText = "คำอธิบาย: " + questionData.rationale;
-    rationaleElement.style.display = 'block';
-}
-
-// 5. เปลี่ยนข้อ
-function nextQuestion() {
-    if (currentIndex < currentQuestions.length - 1) {
-        currentIndex++;
+    if (selectedIndex === questionData.answerIndex) score++;
+    currentIndex++;
+    if (currentIndex < currentQuestions.length) {
         showQuestion();
     } else {
-        finishQuiz();
+        showResult();
     }
 }
 
-function prevQuestion() {
-    if (currentIndex > 0) {
-        currentIndex--;
-        showQuestion();
-    }
-}
-
-// 6. จบการสอบ
-function finishQuiz() {
-    clearInterval(timerInterval);
-    
-    // ซ่อนหน้าข้อสอบและตัวจับเวลา
+function showResult() {
     document.getElementById('quiz-content').style.display = 'none';
-    document.getElementById('timer-container').style.display = 'none';
-    
-    // แสดงหน้าสรุปผลคะแนน
-    const resultContainer = document.getElementById('result-container');
-    resultContainer.style.display = 'block';
-    
-    // ใส่คะแนน
-    document.getElementById('final-score').innerText = `${score} / ${currentQuestions.length}`;
-    
-    // เพิ่มข้อความตามระดับคะแนน
-    const messageElement = document.getElementById('score-message');
-    const percent = (score / currentQuestions.length) * 100;
-    
-    if (percent >= 80) {
-        messageElement.innerText = "สุดยอดมาก! โอกาสสอบติดสูงมากครับ ✨";
-    } else if (percent >= 50) {
-        messageElement.innerText = "เก่งมากครับ อีกนิดเดียวจะทำคะแนนได้ดีมากแล้ว 💪";
-    } else {
-        messageElement.innerText = "พยายามต่อไปนะครับ ทบทวนบ่อยๆ เดี๋ยวก็เก่งครับ ✌️";
-    }
+    document.getElementById('result-container').style.display = 'block';
+    document.getElementById('score-text').innerText = `คุณทำคะแนนได้ ${score} / ${currentQuestions.length}`;
 }
 
-// 7. จับเวลา
 function startTimer() {
-    let time = 180 * 60; // 3 ชั่วโมงตามเกณฑ์จริง
-    const timerDisplay = document.getElementById('time');
-    clearInterval(timerInterval);
-    timerInterval = setInterval(() => {
-        let minutes = Math.floor(time / 60);
-        let seconds = time % 60;
-        timerDisplay.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-        if (time <= 0) { 
-            clearInterval(timerInterval); 
-            alert("หมดเวลาสอบ!");
-            finishQuiz();
+    let timeLeft = 180 * 60;
+    const timerElement = document.getElementById('timer');
+    const timerInterval = setInterval(() => {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        timerElement.innerText = `เวลาคงเหลือ: ${minutes}:${seconds < 10 ? '0' : ''}${seconds} นาที`;
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            showResult();
         }
-        time--;
+        timeLeft--;
     }, 1000);
 }
-function resetQuiz() {
-    // 1. หยุดตัวจับเวลา (สำคัญมาก ถ้าไม่หยุดเวลาจะเดินต่อ)
-    clearInterval(timerInterval);
-    
-    // 2. ซ่อนหน้าจออื่นๆ ทั้งหมด
-    document.getElementById('quiz-content').style.display = 'none';
-    document.getElementById('timer-container').style.display = 'none';
-    document.getElementById('result-container').style.display = 'none';
-    
-    // 3. แสดงหน้าเมนูหลัก
-    document.getElementById('menu-container').style.display = 'block';
-    
-    // 4. ล้างค่าตัวแปรเดิม
-    score = 0;
-    currentIndex = 0;
-    currentQuestions = [];
-    
-    // 5. รีเซ็ตเวลาโชว์ที่หน้าจอ
-    document.getElementById('time').innerText = "180:00";
-    
-    // 6. เลื่อนหน้าจอขึ้นไปบนสุด
-    window.scrollTo(0, 0);
-}
-loadQuestions();
