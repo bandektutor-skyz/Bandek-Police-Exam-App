@@ -31,15 +31,12 @@
     🏠 กลับหน้าหลัก
 </button>
 
-<div id="timer-container" style="display: none; position: fixed; bottom: 0; left: 0; width: 100%; background-color: #333; color: #fff; text-align: center; padding: 15px 0; font-size: 20px; font-weight: bold; box-shadow: 0 -2px 10px rgba(0,0,0,0.3); z-index: 1000; pointer-events: none;">
+<div id="timer-container" style="display: none; position: fixed; bottom: 0; left: 0; width: 100%; background-color: #333; color: #fff; text-align: center; padding: 15px 0; font-size: 20px; font-weight: bold; z-index: 1000;">
     เวลาคงเหลือ: <span id="timer">180:00</span> นาที
 </div>
 
-<style>
-    body { padding-bottom: 100px !important; }
-</style>
-    
-<div id="container"> 
+<div id="menu-container">
+    <div id="quiz-content" style="display: none;"></div>
     <div id="menu">
         <h1>เลือกชุดข้อสอบ</h1>
         <div class="menu-grid">
