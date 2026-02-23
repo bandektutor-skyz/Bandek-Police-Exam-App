@@ -36,20 +36,18 @@
 </div>
 
 <div id="menu-container">
-    <div id="quiz-content" style="display: none;"></div>
-            <button class="menu-btn" onclick="startQuiz(1)">ชุดที่ 1</button>
-            <button class="menu-btn" onclick="startQuiz(2)">ชุดที่ 2</button>
-            <button class="menu-btn" onclick="startQuiz(3)">ชุดที่ 3</button>
-            <button class="menu-btn" onclick="startQuiz(4)">ชุดที่ 4</button>
-            <button class="menu-btn" onclick="startQuiz(5)">ชุดที่ 5</button>
-        </div>
+    <h1>เลือกชุดข้อสอบ</h1>
+    <div class="menu-grid">
+        <button class="menu-btn" onclick="startQuiz(1)">ชุดที่ 1</button>
+        <button class="menu-btn" onclick="startQuiz(2)">ชุดที่ 2</button>
+        <button class="menu-btn" onclick="startQuiz(3)">ชุดที่ 3</button>
+        <button class="menu-btn" onclick="startQuiz(4)">ชุดที่ 4</button>
+        <button class="menu-btn" onclick="startQuiz(5)">ชุดที่ 5</button>
     </div>
 </div>
 
-    <div id="quiz-content" style="display: none;">
-        <h2 id="question">กำลังโหลดข้อสอบ...</h2>
-        <div id="options"></div>
-        <div style="display: flex; gap: 10px; margin-top: 20px;">
+<div id="quiz-content" style="display: none;">
+    </div>
             <button id="prev-btn" onclick="prevQuestion()" style="background-color: #6c757d;">ย้อนกลับ</button>
             <button id="skip-btn" onclick="nextQuestion()" style="background-color: #f39c12;">ข้ามข้อนี้</button>
         </div>
