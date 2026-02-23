@@ -148,19 +148,26 @@ function startTimer() {
     }, 1000);
 }
 function resetQuiz() {
-    // 1. ซ่อนหน้าสรุปคะแนน
+    // 1. หยุดตัวจับเวลา (สำคัญมาก ถ้าไม่หยุดเวลาจะเดินต่อ)
+    clearInterval(timerInterval);
+    
+    // 2. ซ่อนหน้าจออื่นๆ ทั้งหมด
+    document.getElementById('quiz-content').style.display = 'none';
+    document.getElementById('timer-container').style.display = 'none';
     document.getElementById('result-container').style.display = 'none';
     
-    // 2. กลับไปแสดงหน้าเมนูเลือกชุดข้อสอบ
+    // 3. แสดงหน้าเมนูหลัก
     document.getElementById('menu-container').style.display = 'block';
     
-    // 3. รีเซ็ตค่าตัวแปรต่างๆ เตรียมพร้อมสำหรับการสอบครั้งใหม่
-    currentIndex = 0;
+    // 4. ล้างค่าตัวแปรเดิม
     score = 0;
+    currentIndex = 0;
     currentQuestions = [];
     
-    // 4. รีเซ็ตหน้าปัดเวลา (ถ้าต้องการให้กลับไปเป็น 180:00)
+    // 5. รีเซ็ตเวลาโชว์ที่หน้าจอ
     document.getElementById('time').innerText = "180:00";
-    document.getElementById('timer-container').style.display = 'none';
+    
+    // 6. เลื่อนหน้าจอขึ้นไปบนสุด
+    window.scrollTo(0, 0);
 }
 loadQuestions();
