@@ -13,7 +13,7 @@ async function loadQuestions() {
 }
 
 // 2. ฟังก์ชันเลือกชุดข้อสอบ (Set)
-function selectSet(setNumber) {
+function startQuiz(setNumber) {
     // กรองข้อสอบตามเลขชุดที่เลือก
     currentQuestions = allQuestions.filter(q => q.set === setNumber);
     
