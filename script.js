@@ -30,7 +30,7 @@ function startQuiz(setNumber) {
 // 3. ฟังก์ชันแสดงคำถาม
 function showQuestion(index) {
     const q = currentQuestions[index];
-    const questionText = document.getElementById('question-text');
+    const questionText = document.getElementById('question');
     if (questionText) {
         questionText.innerText = q.question;
     }
