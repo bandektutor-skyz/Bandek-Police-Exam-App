@@ -1,29 +1,25 @@
 [
-  /* --- 1. ความสามารถทั่วไป (คณิตศาสตร์/ตรรกศาสตร์) 30 ข้อ --- */
   { "set": 1, "id": 1, "category": "ความสามารถทั่วไป", "question": "อนุกรม: 2, 5, 10, 17, 26, ... ตัวเลขถัดไปคือข้อใด?", "options": ["35", "37", "39", "41"], "answerIndex": 1, "rationale": "เพิ่มขึ้นด้วยเลขคี่ลำดับ: +3, +5, +7, +9 ตัวถัดไปคือ +11 (26+11 = 37)" },
   { "set": 1, "id": 2, "category": "ความสามารถทั่วไป", "question": "สมชายมีเงิน 500 บาท ซื้อของไป 15% จะเหลือเงินกี่บาท?", "options": ["425", "450", "475", "485"], "answerIndex": 0, "rationale": "15% ของ 500 คือ 75; 500 - 75 = 425" },
   { "set": 1, "id": 3, "category": "ความสามารถทั่วไป", "question": "3, 6, 12, 24, ... ตัวเลขถัดไปคือข้อใด?", "options": ["36", "40", "48", "50"], "answerIndex": 2, "rationale": "เพิ่มขึ้นเป็น 2 เท่า (คูณ 2) จากตัวก่อนหน้า" },
 
-  /* --- 2. ภาษาไทย 25 ข้อ --- */
-  { "set": 1, "id": 31, "category": "ภาษาไทย", "question": "คำราชาศัพท์ 'เสวย' หมายถึงข้อใด?", "options": ["นอน", "กิน", "เดิน", "อาบน้ำ"], "answerIndex": 1, "rationale": "เสวย หมายถึง กิน หรือ รับประทาน" },
+    { "set": 1, "id": 31, "category": "ภาษาไทย", "question": "คำราชาศัพท์ 'เสวย' หมายถึงข้อใด?", "options": ["นอน", "กิน", "เดิน", "อาบน้ำ"], "answerIndex": 1, "rationale": "เสวย หมายถึง กิน หรือ รับประทาน" },
   { "set": 1, "id": 32, "category": "ภาษาไทย", "question": "ข้อใดเขียนสะกดถูกต้อง?", "options": ["พะวง", "พะว๊ง", "พวง", "พะว้ง"], "answerIndex": 0, "rationale": "พะวง เขียนแบบไม่มีรูปวรรณยุกต์" },
 
-  /* --- 3. ภาษาอังกฤษ 30 ข้อ --- */
-  { "set": 1, "id": 56, "category": "ภาษาอังกฤษ", "question": "The police ______ looking for the thief right now.", "options": ["is", "am", "are", "was"], "answerIndex": 2, "rationale": "Police เป็นพหูพจน์ ใช้ are" },
+    { "set": 1, "id": 56, "category": "ภาษาอังกฤษ", "question": "The police ______ looking for the thief right now.", "options": ["is", "am", "are", "was"], "answerIndex": 2, "rationale": "Police เป็นพหูพจน์ ใช้ are" },
   { "set": 1, "id": 57, "category": "ภาษาอังกฤษ", "question": "A: How are you? B: ______", "options": ["I'm a doctor.", "I'm fine, thank you.", "I'm ten.", "I'm from Thailand."], "answerIndex": 1, "rationale": "ตอบรับคำทักทายปกติ" },
 
-  /* --- 4. เทคโนโลยีสารสนเทศ (คอมพิวเตอร์) 25 ข้อ --- */
-  { "set": 1, "id": 86, "category": "คอมพิวเตอร์", "question": "ข้อใดคืออุปกรณ์ 'Output'?", "options": ["Mouse", "Keyboard", "Printer", "Scanner"], "answerIndex": 2, "rationale": "Printer แสดงผลออกทางกระดาษ" },
+   { "set": 1, "id": 86, "category": "คอมพิวเตอร์", "question": "ข้อใดคืออุปกรณ์ 'Output'?", "options": ["Mouse", "Keyboard", "Printer", "Scanner"], "answerIndex": 2, "rationale": "Printer แสดงผลออกทางกระดาษ" },
   { "set": 1, "id": 87, "category": "คอมพิวเตอร์", "question": "คีย์ลัด Ctrl + C ใช้สำหรับทำอะไร?", "options": ["วาง", "ตัด", "คัดลอก", "พิมพ์"], "answerIndex": 2, "rationale": "C มาจาก Copy" },
 
-  /* --- 5. กฎหมายที่ประชาชนควรรู้ 20 ข้อ --- */
+  
   { "set": 1, "id": 111, "category": "กฎหมาย", "question": "กู้ยืมเงินเกินกี่บาท ต้องมีหลักฐานเป็นหนังสือจึงจะฟ้องร้องได้?", "options": ["500 บาท", "1,000 บาท", "2,000 บาท", "5,000 บาท"], "answerIndex": 2, "rationale": "2,000 บาทขึ้นไป" },
   { "set": 1, "id": 112, "category": "กฎหมาย", "question": "ป้องกันโดยชอบด้วยกฎหมาย ผู้นั้นมีความผิดหรือไม่?", "options": ["ผิดแต่ไม่ต้องรับโทษ", "มีความผิด", "ไม่มีความผิด", "ผิดครึ่งหนึ่ง"], "answerIndex": 2, "rationale": "ไม่มีความผิด" },
 
-  /* --- 6. สังคม วัฒนธรรม จริยธรรม และอาเซียน 20 ข้อ --- */
+  
   { "set": 1, "id": 131, "category": "สังคมและอาเซียน", "question": "สำนักงานเลขาธิการอาเซียน ตั้งอยู่ที่เมืองใด?", "options": ["กรุงเทพฯ", "สิงคโปร์", "จาการ์ตา", "กัวลาลัมเปอร์"], "answerIndex": 2, "rationale": "จาการ์ตา อินโดนีเซีย" },
   { "set": 1, "id": 132, "category": "สังคมและอาเซียน", "question": "ประเทศใดเป็นสมาชิกอาเซียนลำดับที่ 11?", "options": ["ติมอร์-เลสเต", "กัมพูชา", "ลาว", "เวียดนาม"], "answerIndex": 0, "rationale": "ติมอร์-เลสเต" },
-/* --- เพิ่มเติมหมวดภาษาอังกฤษ (ID 58-65) --- */
+
   { "set": 1, "id": 58, "category": "ภาษาอังกฤษ", "question": "He ______ to the gym every morning.", "options": ["go", "goes", "going", "gone"], "answerIndex": 1, "rationale": "ประธานเอกพจน์ (He) กริยาเติม s/es ใน Present Simple" },
   { "set": 1, "id": 59, "category": "ภาษาอังกฤษ", "question": "What is the synonym of 'Quick'?", "options": ["Slow", "Fast", "Hard", "Quiet"], "answerIndex": 1, "rationale": "Fast มีความหมายเหมือนกับ Quick (รวดเร็ว)" },
   
