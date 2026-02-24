@@ -19,9 +19,12 @@ function startQuiz(setNumber) {
     
     if (currentQuestions.length > 0) {
         // ซ่อนหน้าเมนูและแสดงหน้าทำข้อสอบ
+// บังคับซ่อนหน้าเมนู (บรรทัด 40 ใน HTML)
 document.getElementById('home-screen').style.display = 'none';
-            document.getElementById('quiz-screen').style.display = 'block';
-            document.getElementById('quiz-screen').classList.remove('hidden');
+
+// บังคับแสดงหน้าจอสอบ (บรรทัด 51 ใน HTML)
+document.getElementById('quiz-screen').style.display = 'block';
+document.getElementById('quiz-screen').classList.remove('hidden');
         showQuestion(0);
     } else {
         alert("ขออภัย ไม่พบข้อสอบชุดที่ " + setNumber);
