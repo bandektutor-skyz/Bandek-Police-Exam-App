@@ -19,8 +19,9 @@ function startQuiz(setNumber) {
     
     if (currentQuestions.length > 0) {
         // ซ่อนหน้าเมนูและแสดงหน้าทำข้อสอบ
-        document.getElementById('home-screen').classList.add('hidden');
-        document.getElementById('quiz-screen').classList.remove('hidden');
+document.getElementById('home-screen').style.display = 'none';
+            document.getElementById('quiz-screen').style.display = 'block';
+            document.getElementById('quiz-screen').classList.remove('hidden');
         showQuestion(0);
     } else {
         alert("ขออภัย ไม่พบข้อสอบชุดที่ " + setNumber);
