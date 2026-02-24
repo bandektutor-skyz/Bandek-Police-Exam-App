@@ -19,7 +19,7 @@ function startQuiz(setNumber) {
     
     if (currentQuestions.length > 0) {
         // ซ่อนหน้าเมนูและแสดงหน้าทำข้อสอบ
-        document.getElementById('menu-screen').classList.add('hidden');
+        document.getElementById('home-screen').classList.add('hidden');
         document.getElementById('quiz-screen').classList.remove('hidden');
         showQuestion(0);
     } else {
@@ -27,14 +27,48 @@ function startQuiz(setNumber) {
     }
 }
 
-// 3. ฟังก์ชันแสดงคำถาม
+// 3. ฟังก์ชันแสดงคำถามและตัวเลือก
 function showQuestion(index) {
     const q = currentQuestions[index];
     const questionText = document.getElementById('question');
+    const optionsContainer = document.getElementById('options'); // ตรวจสอบ ID ใน index.html ว่าชื่อ 'options' หรือไม่
+
     if (questionText) {
-        questionText.innerText = q.question;
+        // แสดงลำดับข้อและเนื้อหาคำถาม
+        questionText.innerText = (index + 1) + ". " + q.question;
     }
-    // เพิ่มเติมโค้ดส่วนแสดงตัวเลือก (Options) ตามโครงสร้างแอปของคุณ
+
+    if (optionsContainer) {
+        optionsContainer.innerHTML = ''; // ล้างตัวเลือกเก่าออกก่อน
+        
+        q.options.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.innerText = opt;
+            btn.className = 'option-btn'; // คลาสสำหรับตกแต่ง CSS
+            // เมื่อคลิกจะเรียกฟังก์ชันเช็คคำตอบ
+            btn.onclick = () => checkAnswer(i, q.answerIndex, index);
+            optionsContainer.appendChild(btn);
+        });
+    }
+}
+
+// 4. ฟังก์ชันตรวจสอบคำตอบ
+function checkAnswer(selected, correct, currentIndex) {
+    if (selected === correct) {
+        alert("ถูกต้องครับ! 🎉");
+    } else {
+        alert("ยังไม่ถูกนะครับ ลองใหม่ข้อถัดไป");
+    }
+
+    // เลื่อนไปข้อถัดไปถ้ายังไม่ครบ
+    if (currentIndex + 1 < currentQuestions.length) {
+        showQuestion(currentIndex + 1);
+    } else {
+        alert("ยินดีด้วย! คุณทำครบทุกข้อในชุดนี้แล้ว");
+        // กลับไปหน้าเมนู
+        document.getElementById('home-screen').classList.remove('hidden');
+        document.getElementById('quiz-screen').classList.add('hidden');
+    }
 }
 
 // เรียกใช้งานฟังก์ชันโหลดข้อมูลทันทีที่เปิดแอป
