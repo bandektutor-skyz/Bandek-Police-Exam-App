@@ -27,11 +27,12 @@ if (currentQuestions.length > 0) {
         
         // 3. เริ่มแสดงคำถามข้อแรก
         showQuestion(0);
-    } else {
-        alert("ขออภัย ไม่พบข้อสอบชุดที่ " + setNumber);
-    }
+} else {
+            alert("ขออภัย ไม่พบข้อสอบชุดที่ " + setNumber);
+        }
+} // <--- วงเล็บปิดตัวนี้ตัวเดียวเท่านั้นที่จบฟังก์ชัน startQuiz
 
-// 3. ฟังก์ชันแสดงคำถามและตัวเลือก
+// 3. ฟังก์ชันแสดงคำถามและตัวเลือก (บรรทัด 34)
 function showQuestion(index) {
     const q = currentQuestions[index];
     const questionText = document.getElementById('question');
