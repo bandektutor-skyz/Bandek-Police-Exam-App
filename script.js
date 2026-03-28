@@ -1,3 +1,5 @@
+let timeLeft = 180 * 60; // 180 นาที
+let timerInterval;
 let allQuestions = [];
 let currentIndex = 0;
 let score = 0;
@@ -85,5 +87,22 @@ function prevQuestion() {
 
 // เรียกใช้โหลดข้อมูลทันทีที่เปิดแอป
 loadQuestions();
-// เรียกใช้โหลดข้อมูลทันทีที่เปิดแอป
-loadQuestions();
+function startTimer() {
+    timerInterval = setInterval(() => {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        document.getElementById('timer').innerText = `เวลาเหลือ: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            finishQuiz("หมดเวลาแล้ว!");
+        }
+        timeLeft--;
+    }, 1000);
+}
+
+function finishQuiz(message) {
+    clearInterval(timerInterval);
+    alert(`${message}\nคะแนนของคุณคือ: ${score} คะแนน`);
+    location.reload();
+}
