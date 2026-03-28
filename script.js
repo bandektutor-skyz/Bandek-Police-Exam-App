@@ -18,19 +18,17 @@ function startQuiz(setNumber) {
     currentQuestions = allQuestions.filter(q => q.set === setNumber);
     
 if (currentQuestions.length > 0) {
-        // 1. ซ่อนหน้าเมนู
+        // 1. ซ่อนหน้าเมนูและแสดงหน้าข้อสอบ
         document.getElementById('home-screen').style.display = 'none';
-        
-        // 2. แสดงหน้าข้อสอบ
         document.getElementById('quiz-screen').style.display = 'block';
         document.getElementById('quiz-screen').classList.remove('hidden');
-        
-        // 3. เริ่มแสดงคำถามข้อแรก
+
+        // 2. เริ่มแสดงคำถามข้อแรก
         showQuestion(0);
-} else {
-            alert("ขออภัย ไม่พบข้อสอบชุดที่ " + setNumber);
-        }
-} // <--- วงเล็บปิดตัวนี้ตัวเดียวเท่านั้นที่จบฟังก์ชัน startQuiz
+    } else {
+        alert("ขออภัย ไม่พบข้อสอบชุดที่ " + setNumber);
+    }
+} // ปิดฟังก์ชัน startQuiz พอดี
 
 // 3. ฟังก์ชันแสดงคำถามและตัวเลือก (บรรทัด 34)
 function showQuestion(index) {
