@@ -2,7 +2,7 @@ let allQuestions = [];
 let currentIndex = 0;
 let score = 0;
 
-// 1. โหลดข้อมูล
+// 1. โหลดข้อมูลจากไฟล์ JSON
 async function loadQuestions() {
     try {
         const response = await fetch('questions.json');
@@ -13,25 +13,33 @@ async function loadQuestions() {
     }
 }
 
-// 2. เริ่มสอบ
+// 2. ฟังก์ชันเริ่มทำข้อสอบ
 function startQuiz() {
     if (allQuestions.length > 0) {
+        // เปลี่ยนหน้าจอด้วยวิธีที่ชัวร์ที่สุด
         document.getElementById('home-screen').classList.add('hidden');
         document.getElementById('quiz-screen').classList.remove('hidden');
+        document.getElementById('quiz-screen').style.display = 'block';
+        
+        currentIndex = 0;
+        score = 0;
         showQuestion(0);
     } else {
-        alert("กรุณารอโหลดข้อสอบสักครู่...");
+        alert("ขออภัย ข้อมูลข้อสอบยังโหลดไม่สำเร็จ กรุณารอสักครู่ครับ");
     }
 }
 
-// 3. แสดงโจทย์
+// 3. แสดงคำถามและตัวเลือก
 function showQuestion(index) {
     currentIndex = index;
     const q = allQuestions[index];
-    document.getElementById('question').innerText = (index + 1) + ". " + q.question;
+    
+    // อัปเดตหัวข้อโจทย์และเลขข้อ
+    document.getElementById('progress-text').innerText = "ข้อที่ " + (index + 1) + " / " + allQuestions.length;
+    document.getElementById('question').innerText = q.question;
     
     const container = document.getElementById('options');
-    container.innerHTML = '';
+    container.innerHTML = ''; // ล้างตัวเลือกเก่า
     
     q.options.forEach((opt, i) => {
         const btn = document.createElement('button');
@@ -50,16 +58,20 @@ function checkAnswer(selected, correct) {
     } else {
         alert("ยังไม่ถูกครับ ลองข้อถัดไปนะ");
     }
+    
+    document.getElementById('score-text').innerText = "คะแนน: " + score;
     nextQuestion();
 }
 
+// 5. ไปข้อถัดไป
 function nextQuestion() {
     if (currentIndex + 1 < allQuestions.length) {
         showQuestion(currentIndex + 1);
     } else {
-        alert("ทำครบทุกข้อแล้ว! คะแนนของคุณคือ: " + score);
-        location.reload(); // กลับหน้าแรก
+        alert("ทำครบทุกข้อแล้ว! คะแนนรวมของคุณคือ: " + score + " คะแนน");
+        location.reload(); // กลับหน้าหลัก
     }
 }
 
+// เรียกใช้โหลดข้อมูลทันทีที่เปิดแอป
 loadQuestions();
