@@ -27,10 +27,13 @@
             </div>
             <h3 id="question" class="mb-4 fw-normal">กำลังโหลดโจทย์...</h3>
             <div id="options" class="d-grid gap-2"></div>
-           <div class="mt-4 d-flex gap-2">
-    <button onclick="prevQuestion()" class="btn btn-outline-secondary">ย้อนกลับ</button>
-    <button onclick="nextQuestion()" class="btn btn-secondary">ข้ามข้อนี้</button>
-</div>
+         <div class="mt-4 d-flex justify-content-between align-items-center">
+                <div class="d-flex gap-2">
+                    <button onclick="prevQuestion()" class="btn btn-outline-secondary">ย้อนกลับ</button>
+                    <button onclick="nextQuestion()" class="btn btn-secondary">ข้ามข้อนี้</button>
+                </div>
+                <div id="timer" class="fw-bold text-danger fs-4">เวลาเหลือ: 180:00</div>
+            </div> 
     <script src="script.js"></script>
 </body>
 </html>
