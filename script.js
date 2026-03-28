@@ -1,10 +1,10 @@
-let timeLeft = 180 * 60; // 180 นาที
-let timerInterval;
 let allQuestions = [];
 let currentIndex = 0;
 let score = 0;
+let timeLeft = 180 * 60; // 180 นาที
+let timerInterval;
 
-// 1. โหลดข้อมูลจากไฟล์ JSON
+// 1. โหลดข้อมูล
 async function loadQuestions() {
     try {
         const response = await fetch('questions.json');
@@ -15,34 +15,31 @@ async function loadQuestions() {
     }
 }
 
-// 2. ฟังก์ชันเริ่มทำข้อสอบ
+// 2. เริ่มสอบ
 function startQuiz() {
     if (allQuestions.length > 0) {
-        // เปลี่ยนหน้าจอด้วยวิธีที่ชัวร์ที่สุด
         document.getElementById('home-screen').classList.add('hidden');
         document.getElementById('quiz-screen').classList.remove('hidden');
         document.getElementById('quiz-screen').style.display = 'block';
         
         currentIndex = 0;
         score = 0;
-        startTimer(); //
+        startTimer(); // เริ่มจับเวลา
         showQuestion(0);
     } else {
-        alert("ขออภัย ข้อมูลข้อสอบยังโหลดไม่สำเร็จ กรุณารอสักครู่ครับ");
+        alert("กรุณารอโหลดข้อสอบสักครู่...");
     }
 }
 
-// 3. แสดงคำถามและตัวเลือก
+// 3. แสดงโจทย์
 function showQuestion(index) {
     currentIndex = index;
     const q = allQuestions[index];
-    
-    // อัปเดตหัวข้อโจทย์และเลขข้อ
-    document.getElementById('progress-text').innerText = "ข้อที่ " + (index + 1) + " / " + allQuestions.length;
+    document.getElementById('progress-text').innerText = `ข้อที่ ${index + 1} / ${allQuestions.length}`;
     document.getElementById('question').innerText = q.question;
     
     const container = document.getElementById('options');
-    container.innerHTML = ''; // ล้างตัวเลือกเก่า
+    container.innerHTML = '';
     
     q.options.forEach((opt, i) => {
         const btn = document.createElement('button');
@@ -56,38 +53,27 @@ function showQuestion(index) {
 // 4. ตรวจคำตอบ
 function checkAnswer(selected, correct) {
     if (selected === correct) {
-        alert("ถูกต้องครับ! 🎉");
         score++;
-    } else {
-        alert("ยังไม่ถูกครับ ลองข้อถัดไปนะ");
     }
-    
-    document.getElementById('score-text').innerText = "คะแนน: " + score;
     nextQuestion();
 }
 
-// 5. ไปข้อถัดไป
+// 5. จัดการปุ่มถัดไป/ย้อนกลับ
 function nextQuestion() {
     if (currentIndex + 1 < allQuestions.length) {
         showQuestion(currentIndex + 1);
     } else {
-        alert("ทำครบทุกข้อแล้ว! คะแนนรวมของคุณคือ: " + score + " คะแนน");
-        location.reload(); // กลับหน้าหลัก
+        finishQuiz("คุณทำข้อสอบครบทุกข้อแล้ว!");
     }
 }
-} // วงเล็บปิดของ nextQuestion (เช็คดูว่ามีหรือยัง)
 
-// ฟังก์ชันสำหรับปุ่ม "ย้อนกลับ"
 function prevQuestion() {
     if (currentIndex > 0) {
         showQuestion(currentIndex - 1);
-    } else {
-        alert("นี่คือข้อแรกแล้วครับ");
     }
 }
 
-// เรียกใช้โหลดข้อมูลทันทีที่เปิดแอป
-loadQuestions();
+// 6. ระบบเวลาและสรุปผล
 function startTimer() {
     timerInterval = setInterval(() => {
         const minutes = Math.floor(timeLeft / 60);
@@ -107,3 +93,5 @@ function finishQuiz(message) {
     alert(`${message}\nคะแนนของคุณคือ: ${score} คะแนน`);
     location.reload();
 }
+
+loadQuestions();
