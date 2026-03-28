@@ -17,19 +17,19 @@ function startQuiz(setNumber) {
     console.log("กำลังเริ่มชุดที่:", setNumber);
     currentQuestions = allQuestions.filter(q => q.set === setNumber);
     
-    if (currentQuestions.length > 0) {
-        // ซ่อนหน้าเมนูและแสดงหน้าทำข้อสอบ
-// บังคับซ่อนหน้าเมนู (บรรทัด 40 ใน HTML)
-document.getElementById('home-screen').style.display = 'none';
-
-// บังคับแสดงหน้าจอสอบ (บรรทัด 51 ใน HTML)
-document.getElementById('quiz-screen').style.display = 'block';
-document.getElementById('quiz-screen').classList.remove('hidden');
+if (currentQuestions.length > 0) {
+        // 1. ซ่อนหน้าเมนู
+        document.getElementById('home-screen').style.display = 'none';
+        
+        // 2. แสดงหน้าข้อสอบ
+        document.getElementById('quiz-screen').style.display = 'block';
+        document.getElementById('quiz-screen').classList.remove('hidden');
+        
+        // 3. เริ่มแสดงคำถามข้อแรก
         showQuestion(0);
     } else {
         alert("ขออภัย ไม่พบข้อสอบชุดที่ " + setNumber);
     }
-}
 
 // 3. ฟังก์ชันแสดงคำถามและตัวเลือก
 function showQuestion(index) {
