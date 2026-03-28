@@ -4,80 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>แอปข้อสอบตำรวจ 150 ข้อ</title>
-    <link rel="manifest" href="manifest.json">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#1a73e8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Arial', sans-serif; background-color: #f4f4f9; display: flex; justify-content: center; padding: 20px; }
-        #quiz-container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 600px; }
-        button:not(#home-btn) { 
-    display: block; 
-    width: 100%; 
-    padding: 12px; 
-    margin: 10px 0; 
-    border: none; 
-    border-radius: 8px; 
-    background: #007bff; 
-    color: white; 
-    cursor: pointer; 
-}
-        button:hover { background: #0056b3; }
-        .rationale { background: #e9ecef; padding: 10px; margin-top: 15px; border-radius: 5px; display: none; }
-.hidden {
-        display: none !important;
-    }
-</style>
+        .hidden { display: none !important; }
+        .option-btn { display: block; width: 100%; margin-bottom: 10px; text-align: left; }
+    </style>
 </head>
-<body>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div id="home-screen" class="text-center">
+            <h1 class="mb-4">เตรียมสอบนายสิบตำรวจ</h1>
+            <p>แบบทดสอบความรู้พื้นฐาน 150 ข้อ</p>
+            <button onclick="startQuiz()" class="btn btn-primary btn-lg">เริ่มทำข้อสอบ</button>
+        </div>
 
-<button onclick="resetQuiz()" id="home-btn" style="display: none; position: fixed; top: 10px; right: 10px; z-index: 9999; background-color: #f44336; color: white; border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-size: 16px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3); width: auto; height: auto;">
-    🏠 กลับหน้าหลัก
-</button>
-
-<div id="timer-container" style="display: none; position: fixed; bottom: 0; left: 0; width: 100%; background-color: #333; color: #fff; text-align: center; padding: 15px 0; font-size: 20px; font-weight: bold; z-index: 1000;">
-    เวลาคงเหลือ: <span id="timer">180:00</span> นาที
-</div>
-
-<div id="home-screen">
-    <h1>เลือกชุดข้อสอบ</h1>
-    <div class="menu-grid">
-        <button class="menu-btn" onclick="startQuiz(1)">ชุดที่ 1</button>
-        <button class="menu-btn" onclick="startQuiz(2)">ชุดที่ 2</button>
-        <button class="menu-btn" onclick="startQuiz(3)">ชุดที่ 3</button>
-        <button class="menu-btn" onclick="startQuiz(4)">ชุดที่ 4</button>
-        <button class="menu-btn" onclick="startQuiz(5)">ชุดที่ 5</button>
-  
-
-<div id="quiz-screen" style="display: none; padding: 20px; max-width: 800px; margin: 0 auto;">
-<div id="quiz-content" style="padding: 20px; max-width: 800px; margin: 0 auto;">
-    <div id="question-container">
-        <h2 id="question">กำลังโหลดข้อสอบ...</h2>
-        <div id="options"></div>
+        <div id="quiz-screen" class="hidden" style="max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            <h2 id="question" class="mb-4">กำลังโหลดข้อสอบ...</h2>
+            <div id="options"></div>
+            <div class="mt-4">
+                <button onclick="nextQuestion()" class="btn btn-secondary">ข้ามข้อนี้</button>
+            </div>
+        </div>
     </div>
-</div>
-    <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
-        <button id="prev-btn" onclick="prevQuestion()" style="background-color: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">ย้อนกลับ</button>
-        <button id="skip-btn" onclick="nextQuestion()" style="background-color: #f39c12; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">ข้ามข้อนี้</button>
-    </div>
-</div>
-        <div id="rationale" class="rationale"></div>
-    </div>
-</div>
-   <script src="script.js"></script> 
-
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js');
-      }
-    </script>
-    <div id="result-container" style="display: none; text-align: center; padding: 50px;">
-    <h1 style="color: #4CAF50; font-size: 3rem;">🎉 สอบเสร็จแล้ว! 🎉</h1>
-    <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin: 20px auto; max-width: 400px;">
-        <p style="font-size: 1.5rem; margin-bottom: 10px;">คะแนนที่คุณทำได้</p>
-        <h2 id="final-score" style="font-size: 4rem; margin: 10px 0; color: #1e3c72;">0 / 150</h2>
-        <p id="score-message" style="font-size: 1.2rem; color: #666;"></p>
-    </div>
-    <button onclick="resetQuiz()()" class="option-btn" style="background: #1e3c72; color: white; padding: 15px 40px; font-size: 1.2rem;">กลับไปหน้าหลัก</button>
-</div>
+    <script src="script.js"></script>
 </body>
 </html>
