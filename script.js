@@ -81,5 +81,14 @@ function prevQuestion() {
         alert("นี่คือข้อแรกแล้วครับ ไม่สามารถย้อนกลับได้อีก");
     }
 }
+// ฟังก์ชันสำหรับปุ่ม "ย้อนกลับ"
+function prevQuestion() {
+    if (currentIndex > 0) {
+        // ลดลำดับข้อลง 1 แล้วสั่งให้แสดงโจทย์ใหม่
+        showQuestion(currentIndex - 1);
+    } else {
+        alert("นี่คือข้อแรกแล้วครับ");
+    }
+}
 // เรียกใช้โหลดข้อมูลทันทีที่เปิดแอป
 loadQuestions();
