@@ -25,6 +25,7 @@ function startQuiz() {
         
         currentIndex = 0;
         score = 0;
+        startTimer(); //
         showQuestion(0);
     } else {
         alert("ขออภัย ข้อมูลข้อสอบยังโหลดไม่สำเร็จ กรุณารอสักครู่ครับ");
