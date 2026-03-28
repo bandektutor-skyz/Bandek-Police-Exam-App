@@ -72,6 +72,13 @@ function nextQuestion() {
         location.reload(); // กลับหน้าหลัก
     }
 }
-
+// ฟังก์ชันย้อนกลับไปข้อก่อนหน้า
+function prevQuestion() {
+    if (currentIndex > 0) {
+        showQuestion(currentIndex - 1);
+    } else {
+        alert("นี่คือข้อแรกแล้วครับ");
+    }
+}
 // เรียกใช้โหลดข้อมูลทันทีที่เปิดแอป
 loadQuestions();
