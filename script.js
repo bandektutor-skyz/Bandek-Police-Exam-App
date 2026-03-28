@@ -1,7 +1,8 @@
 let allQuestions = [];
-let currentQuestions = [];
+let currentIndex = 0;
+let score = 0;
 
-// 1. โหลดข้อมูลจากไฟล์ JSON
+// 1. โหลดข้อมูล
 async function loadQuestions() {
     try {
         const response = await fetch('questions.json');
@@ -12,72 +13,53 @@ async function loadQuestions() {
     }
 }
 
-// 2. ฟังก์ชันเริ่มทำข้อสอบ (แบบชุดเดียว ใช้งานได้แน่นอน)
+// 2. เริ่มสอบ
 function startQuiz() {
-    console.log("กำลังเริ่มข้อสอบ...");
-    
-    // ดึงข้อสอบทั้งหมดมาใช้ทันที
-    currentQuestions = allQuestions; 
-
-    if (currentQuestions.length > 0) {
-        // จัดการหน้าจอ: ซ่อนเมนู และ แสดงหน้าจอข้อสอบ
-        document.getElementById('home-screen').style.display = 'none';
+    if (allQuestions.length > 0) {
         document.getElementById('home-screen').classList.add('hidden');
-        
-        document.getElementById('quiz-screen').style.display = 'block';
         document.getElementById('quiz-screen').classList.remove('hidden');
-
-        // เริ่มแสดงข้อที่ 1
         showQuestion(0);
     } else {
-        alert("ไม่พบข้อมูลข้อสอบ กรุณารอโหลดข้อมูลสักครู่ครับ");
+        alert("กรุณารอโหลดข้อสอบสักครู่...");
     }
 }
-} // ปิดฟังก์ชัน startQuiz
 
-// 3. ฟังก์ชันแสดงคำถามและตัวเลือก (บรรทัด 34)
+// 3. แสดงโจทย์
 function showQuestion(index) {
-    const q = currentQuestions[index];
-    const questionText = document.getElementById('question');
-    const optionsContainer = document.getElementById('options'); // ตรวจสอบ ID ใน index.html ว่าชื่อ 'options' หรือไม่
-
-    if (questionText) {
-        // แสดงลำดับข้อและเนื้อหาคำถาม
-        questionText.innerText = (index + 1) + ". " + q.question;
-    }
-
-    if (optionsContainer) {
-        optionsContainer.innerHTML = ''; // ล้างตัวเลือกเก่าออกก่อน
-        
-        q.options.forEach((opt, i) => {
-            const btn = document.createElement('button');
-            btn.innerText = opt;
-            btn.className = 'option-btn'; // คลาสสำหรับตกแต่ง CSS
-            // เมื่อคลิกจะเรียกฟังก์ชันเช็คคำตอบ
-            btn.onclick = () => checkAnswer(i, q.answerIndex, index);
-            optionsContainer.appendChild(btn);
-        });
-    }
+    currentIndex = index;
+    const q = allQuestions[index];
+    document.getElementById('question').innerText = (index + 1) + ". " + q.question;
+    
+    const container = document.getElementById('options');
+    container.innerHTML = '';
+    
+    q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.innerText = opt;
+        btn.className = 'btn btn-outline-primary option-btn';
+        btn.onclick = () => checkAnswer(i, q.answerIndex);
+        container.appendChild(btn);
+    });
 }
 
-// 4. ฟังก์ชันตรวจสอบคำตอบ
-function checkAnswer(selected, correct, currentIndex) {
+// 4. ตรวจคำตอบ
+function checkAnswer(selected, correct) {
     if (selected === correct) {
         alert("ถูกต้องครับ! 🎉");
+        score++;
     } else {
-        alert("ยังไม่ถูกนะครับ ลองใหม่ข้อถัดไป");
+        alert("ยังไม่ถูกครับ ลองข้อถัดไปนะ");
     }
+    nextQuestion();
+}
 
-    // เลื่อนไปข้อถัดไปถ้ายังไม่ครบ
-    if (currentIndex + 1 < currentQuestions.length) {
+function nextQuestion() {
+    if (currentIndex + 1 < allQuestions.length) {
         showQuestion(currentIndex + 1);
     } else {
-        alert("ยินดีด้วย! คุณทำครบทุกข้อในชุดนี้แล้ว");
-        // กลับไปหน้าเมนู
-        document.getElementById('home-screen').classList.remove('hidden');
-        document.getElementById('quiz-screen').classList.add('hidden');
+        alert("ทำครบทุกข้อแล้ว! คะแนนของคุณคือ: " + score);
+        location.reload(); // กลับหน้าแรก
     }
 }
 
-// เรียกใช้งานฟังก์ชันโหลดข้อมูลทันทีที่เปิดแอป
 loadQuestions();
