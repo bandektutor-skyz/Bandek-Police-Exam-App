@@ -12,25 +12,27 @@ async function loadQuestions() {
     }
 }
 
-// 2. ฟังก์ชันเริ่มทำข้อสอบ (ต้องใช้ชื่อ startQuiz ให้ตรงกับที่ปุ่มเรียก)
-function startQuiz(setNumber) {
-    console.log("กำลังเริ่มชุดที่:", setNumber);
-    currentQuestions = allQuestions.filter(q => q.set === setNumber);
+// 2. ฟังก์ชันเริ่มทำข้อสอบ (แบบชุดเดียว ใช้งานได้แน่นอน)
+function startQuiz() {
+    console.log("กำลังเริ่มข้อสอบ...");
     
-if (currentQuestions.length > 0) {
-        // 1. จัดการหน้าจอ (ซ่อนเมนู / แสดงข้อสอบ)
+    // ดึงข้อสอบทั้งหมดมาใช้ทันที
+    currentQuestions = allQuestions; 
+
+    if (currentQuestions.length > 0) {
+        // จัดการหน้าจอ: ซ่อนเมนู และ แสดงหน้าจอข้อสอบ
         document.getElementById('home-screen').style.display = 'none';
-        document.getElementById('quiz-screen').style.display = 'block';
-        
-        // 2. ลบคลาส hidden ออกเพื่อความชัวร์
         document.getElementById('home-screen').classList.add('hidden');
+        
+        document.getElementById('quiz-screen').style.display = 'block';
         document.getElementById('quiz-screen').classList.remove('hidden');
 
-        // 3. สั่งให้เริ่มแสดงโจทย์ข้อที่ 1
+        // เริ่มแสดงข้อที่ 1
         showQuestion(0);
     } else {
-        alert("ไม่พบข้อสอบชุดที่ " + setNumber);
+        alert("ไม่พบข้อมูลข้อสอบ กรุณารอโหลดข้อมูลสักครู่ครับ");
     }
+}
 } // ปิดฟังก์ชัน startQuiz
 
 // 3. ฟังก์ชันแสดงคำถามและตัวเลือก (บรรทัด 34)
